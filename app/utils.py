@@ -1,4 +1,13 @@
 from gunicorn.app.base import BaseApplication
+from flask_sqlalchemy import SQLAlchemy
+
+db=SQLAlchemy()
+
+class SaveMixin(object):
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 class GunicornApp(BaseApplication):
