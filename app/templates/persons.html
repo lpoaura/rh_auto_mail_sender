@@ -1,0 +1,29 @@
+{%extends "main.html"%}
+{%block content %}
+{% block header %}
+<h1><i class="fa fa-users"></i> {% block title %}Nouvelles arrivées saisies{% endblock %}</h1>
+{%endblock%}
+<table id="persons" class="table table-condensed table-responsive">
+<thead>
+    <tr>
+        {% for key in persons[0].keys() %}
+        <th scope="col">{{ key }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+     <tbody>
+    {% for person in persons %}
+    <tr>
+        {% for value in person.values() %}
+        <td>{{ value }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+     </tbody>
+</table>
+<script type="text/javascript">
+
+    $('#persons').DataTable();
+
+</script>
+{%endblock%}

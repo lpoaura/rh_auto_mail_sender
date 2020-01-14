@@ -1,10 +1,24 @@
-{%extends "main.html"%} {% block header %}
-<h1>{% block title %}Ajout d'un nouvel arrivant{% endblock %}</h1>
-{%endblock%}
+{%extends "main.html"%}
 {%block content %}
-
+{% block header %}
+<h1><i class="fa fa-user-plus"></i> {% block title %}Ajout d'un nouvel arrivant{% endblock %}</h1>
+{%endblock%}
 <div class="row">
+    <div class="col-md-4 alert alert-danger">
+        <h3><i class="fas fa-info-circle"></i> Note</h3>
+        <p>Ce formulaire est à renseigner pour toutes les arrivées de nouveau/nouvelle collègue, indépendamment du type
+            de
+            contrat. Merci de le renseigner au moins 2 semaines avant le début de la mission. Son remplissage permet la
+            génération automatique de messages pour:
+        <ul>
+            <li>créer l'adresse mail;</li>
+            <li>créer les accès informatiques ;<∕li>
+            <li>informer Eléonore de l'arrivée de la personne.</li>
+        </ul>
+        </p>
+    </div>
     <div class="col-md-8">
+        <h3><i class="fas fa-user-edit"></i> Formulaire de déclaration</h3>
         <form method="POST" action="/">
             {{ form.hidden_tag() }}
             {% for field in form if field.widget.input_type != 'hidden' %}
@@ -13,43 +27,31 @@
                 <div class="has-error">
                     {{ field.label(class='col-sm-4 col-form-label') }}
                     <div class="col-sm-8">
-                        {{ field(class='form-control') }}
+                        {{ field }}
                     </div>
                 </div>
                 <span style="color: red;">{% for error in field.errors %}{{ error }}{% if not loop.last %}<br/>{% endif %}{% endfor %}</span>
                 {% else %}
                 {{ field.label(class='col-sm-4 col-form-label') }}
                 <div class="col-sm-8">
-                    {{ field(class='form-control') }}
+                    {{ field }}
                 </div>
                 {% endif %}
             </div>
             {% endfor %}
             <div class="text-right">
-                <input type="submit" value="Valider" class="btn btn-outline-success">
+                <input type="submit" value="Valider" class="btn btn-success btn-block">
             </div>
-
+            <script>
+                $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    language: "fr",
+                    calendarWeeks: true,
+                    todayHighlight: true
+                });
+            </script>
         </form>
-
     </div>
-    <div class="col-md-4">
 
-
-        Veniam aut voluptas voluptates culpa quia. Animi reprehenderit rerum sed. Odio perferendis est sed odio quia.
-        Libero ex exercitationem atque temporibus voluptas dicta officia. Odio ea sint itaque dolores quia nostrum.
-
-        Quis accusamus ut corporis. Repellat qui voluptate incidunt excepturi sed odio est cum. Eos earum sit voluptas
-        repellat earum autem quia.
-
-        Quo id excepturi suscipit est. Aut voluptatem repellendus perferendis. Explicabo dignissimos et qui magnam.
-
-        Repellat voluptates sed maxime est voluptatem. Dolorum a sit voluptatem excepturi ea. Accusantium neque cumque
-        voluptatem quidem totam. Ut sunt id maiores laborum. Unde sapiente quo animi modi.
-
-        Expedita est dicta inventore. Quae reiciendis est qui laboriosam ab qui consectetur. Placeat assumenda quas
-        voluptatem debitis laboriosam autem nisi. Sequi unde delectus molestias est voluptas doloremque. Fuga quis rem
-        eos occaecati sunt culpa aut.
-
-    </div>
 </div>
 {% endblock %}

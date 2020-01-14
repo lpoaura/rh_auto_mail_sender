@@ -1,6 +1,9 @@
 from gunicorn.app.base import BaseApplication
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import smtplib
+import config
+
 
 migrate = Migrate()
 
@@ -44,3 +47,23 @@ class GunicornApp(BaseApplication):
 
     def load(self):
         return self.flask_app
+
+def sendmail(subject, content, recipient, datas):
+    try:
+        print('<data>',type(datas))
+        print('<subject>',type(subject))
+        title = subject.format(**datas)
+        body = content.format(**datas)
+        print('content',body)
+        message = 'Subject: {subject}\n\n{body}'.format(subject=title, body=body)
+
+        print('<MESSAGE>',message)
+
+        mailserver = smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT)
+        mailserver.ehlo()
+        mailserver.starttls()
+        mailserver.login(config.SMTP_LOGIN, config.SMTP_PWD)
+        mailserver.sendmail(config.SMTP_LOGIN, recipient, message.encode('utf-8'))
+        mailserver.quit()
+    except Exception as e:
+        print('<sendmail() error> {}'.format(e))

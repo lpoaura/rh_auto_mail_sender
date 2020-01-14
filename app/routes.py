@@ -1,52 +1,72 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models import Person
-from app.utils import db
-from sqlalchemy.exc import IntegrityError
-from flask_wtf import FlaskForm
-from wtforms.ext.sqlalchemy.orm import model_form
+from app.models import Person, EmailReceiverModel
+from app.utils import sendmail
 from app.form import PersonForm
+from datetime import datetime
 
-main_bp = Blueprint('mail', __name__, template_folder='templates')
+main_bp = Blueprint('main', __name__, template_folder='templates')
 
 
-@main_bp.route("/", defaults={'id': None}, methods=["GET", "POST"])
-@main_bp.route("/person/<int:id>", methods=["GET", "POST"])
-def home(id=None):
+@main_bp.route("/", methods=["GET", "POST"])
+def home():
     person_form = PersonForm()
-    
-    if id == None:
-        person = Person()
-    else:
-        person = Person.query.get(id)
 
-    if person_form.validate_on_submit():
-            new_person = person_form.populate_obj(person)
-            db.session.add(new_person)
-            db.session.commit()
-            flash("yay!")
+    if request.method == 'POST':
+        data = request.form
+        try:
+            person_data = {}
+            if data:
+                for d in data:
+                    print(d, data[d])
+                    if hasattr(Person, d) and data[d] != '':
+                        person_data[d] = data[d]
 
-    # if request.method == 'POST':
-    #     data = request.form
-    #     try:
-    #         person_data = {}
-    #         if data:
-    #             for d in data:
-    #                 print(d, data[d])
-    #                 if hasattr(Person, d):
-    #                     person_data[d] = data[d]
-    #         new_person = Person(**person_data)
-    #         new_person.save_to_db()
-    #         id = new_person.id_person
-    #         print('<NEW PERSON ID>', id)
-    #     except Exception as e:
-    #         print('ERROR',e)
+            # Convert Date string to python datetime object
+            person_data['arrival_date'] = datetime.strptime(person_data['arrival_date'], '%Y-%m-%d').date()
+            if 'departure_date' in person_data.keys():
+                person_data['departure_date'] = datetime.strptime(person_data['departure_date'], '%Y-%m-%d').date()
 
-        # return redirect(url_for('person', id=id))
+            print(person_data)
+
+            new_person = Person(**person_data)
+            new_person.save_to_db()
+            id = new_person.id_person
+            print('<NEW PERSON ID>', id)
+
+            recipients = EmailReceiverModel.query.all()
+            for recipient in recipients:
+                sendmail(recipient.subject, recipient.body, recipient.email, person_data)
+
+        except Exception as e:
+            print('ERROR', e)
+
+        return redirect(url_for('main.person', id=id))
 
     return render_template("form.html", form=person_form)
 
 
 @main_bp.route('/person/<int:id>')
 def person(id):
-    person = Person.query.filter(id_person=id)
-    return 'Hello, {}'.format(person.fullname())
+    person = Person.query.filter_by(id_person=id).first()
+    person_dict = dict((col, getattr(person, col)) for col in person.__table__.columns.keys())
+    print('TYPE', type(person_dict))
+    return render_template("person.html", person=person_dict)
+
+
+@main_bp.route('/persons')
+def persons():
+    person = Person.query.all()
+    persons_dict = []
+    for p in person:
+        p_dict = dict((col, getattr(p, col)) for col in p.__table__.columns.keys())
+        persons_dict.append(p_dict)
+    return render_template("persons.html", persons=persons_dict)
+
+@main_bp.route('/recipients')
+def recipients():
+    recipients = EmailReceiverModel.query.all()
+    recipients_dict = []
+    for p in recipients:
+        p_dict = dict((col, getattr(p, col)) for col in p.__table__.columns.keys())
+        recipients_dict.append(p_dict)
+    return render_template("recipients.html", recipients=recipients_dict)

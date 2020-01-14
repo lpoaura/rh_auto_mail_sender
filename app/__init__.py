@@ -6,6 +6,8 @@ from app.routes import main_bp
 from app.utils import db, migrate
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.base import MenuLink
+from flask import url_for
 
 
 
@@ -20,14 +22,18 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    admin = Admin(app, name='AutoMailSender', template_mode='bootstrap3')
-    from app.models import TerritoryUnit, PositionType,Person, EmailReceiverModel
-    admin.add_view(ModelView(Person, db.session))
-    admin.add_view(ModelView(TerritoryUnit, db.session))
-    admin.add_view(ModelView(PositionType, db.session))
-    admin.add_view(ModelView(EmailReceiverModel, db.session))
-    
     app.register_blueprint(main_bp, url_prefix="/")
+
+    admin = Admin(app, name='AutoMailSender', template_mode='bootstrap3')
+
+    from app.models import TerritoryUnit, PositionType,Person, EmailReceiverModel, EmailReceiverAdmin, PersonAdmin
+    admin.add_view(PersonAdmin(Person, db.session, category='Tables'))
+    admin.add_view(ModelView(TerritoryUnit, db.session, category='Tables'))
+    admin.add_view(ModelView(PositionType, db.session, category='Tables'))
+    admin.add_view(EmailReceiverAdmin(EmailReceiverModel, db.session, category='Tables'))
+    admin.add_link(MenuLink(name='Site publique', category='', url='/'))
+    
+
 
     with app.app_context():
         db.create_all()
