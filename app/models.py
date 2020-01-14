@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from app.utils import db, SaveMixin
 from flask_admin.contrib.sqla import ModelView
+
+from app.utils import db, SaveMixin
 
 
 class TerritoryUnit(db.Model, SaveMixin):
@@ -14,24 +15,28 @@ class PositionType(db.Model, SaveMixin):
     name = db.Column(db.String(256), nullable=False, unique=True)
 
 
-class EmailReceiverModel(db.Model, SaveMixin):
+class Recipient(db.Model, SaveMixin):
     id_email_received_model = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), nullable=False)
     subject = db.Column(db.String(256), nullable=False)
     body = db.Column(db.Text, nullable=False)
+    create_ts = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     def __repr__(self):
         return "<EmailReceiverModel: {} {}>".format(self.email, self.subject)
 
-class EmailReceiverAdmin(ModelView):
+
+class RecipientAdmin(ModelView):
     form_widget_args = {
         'body': {
             'rows': 20
         }
     }
 
+
 class Person(db.Model, SaveMixin):
     id_person = db.Column(db.Integer, primary_key=True)
+    email_declarator = db.Column(db.String(256), nullable=False)
     name = db.Column(db.String(80), nullable=False)
     surname = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(256), nullable=False)
@@ -54,5 +59,6 @@ class Person(db.Model, SaveMixin):
     def fullname(self):
         return "{} {}".format(self.name, self.username)
 
+
 class PersonAdmin(ModelView):
-    can_create=False
+    can_create = False

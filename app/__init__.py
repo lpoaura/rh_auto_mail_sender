@@ -26,11 +26,11 @@ def create_app():
 
     admin = Admin(app, name='AutoMailSender', template_mode='bootstrap3')
 
-    from app.models import TerritoryUnit, PositionType,Person, EmailReceiverModel, EmailReceiverAdmin, PersonAdmin
-    admin.add_view(PersonAdmin(Person, db.session, category='Tables'))
-    admin.add_view(ModelView(TerritoryUnit, db.session, category='Tables'))
-    admin.add_view(ModelView(PositionType, db.session, category='Tables'))
-    admin.add_view(EmailReceiverAdmin(EmailReceiverModel, db.session, category='Tables'))
+    from app.models import TerritoryUnit, PositionType,Person, Recipient, RecipientAdmin, PersonAdmin
+    admin.add_view(PersonAdmin(Person, db.session))
+    admin.add_view(ModelView(TerritoryUnit, db.session))
+    admin.add_view(ModelView(PositionType, db.session))
+    admin.add_view(RecipientAdmin(Recipient, db.session))
     admin.add_link(MenuLink(name='Site publique', category='', url='/'))
     
 

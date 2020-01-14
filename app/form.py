@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
-from wtforms.fields import DateField
-from wtforms.validators import DataRequired, Email
-from app.utils import db
-from wtforms.ext.sqlalchemy.orm import model_form
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from app.models import TerritoryUnit, PositionType, Person
+from wtforms.fields import DateField
+from wtforms.fields.html5 import EmailField
+from wtforms.validators import DataRequired, Email
+
+from app.models import TerritoryUnit, PositionType
 
 common_input = {'class': 'form-control'}
 datepicker = {'class': 'form-control datepicker'}
@@ -19,28 +19,32 @@ def get_position_type():
     return PositionType.query
 
 
-OldPersonForm = model_form(model=Person,
-                           base_class=FlaskForm,
-                           db_session=db.session)
-
-
 class PersonForm(FlaskForm):
+    email_declarator = EmailField("Votre email (pour envoie d'une confirmation)", validators=[DataRequired(), Email()],
+                                   render_kw=common_input)
     name = StringField('Nom', validators=[DataRequired()], render_kw=common_input)
     surname = StringField('Prénom', validators=[DataRequired()], render_kw=common_input)
-    email = StringField('Email', validators=[DataRequired(), Email()], render_kw=common_input)
+    email = EmailField('Email', validators=[DataRequired(), Email()], render_kw=common_input)
     arrival_date = DateField('Date d\'arrivée', validators=[DataRequired()], render_kw=datepicker)
     departure_date = DateField('Date de départ', render_kw=datepicker)
-    territory_unit_id = QuerySelectField('Délégation territoriale', query_factory=get_territory_unit, get_label='name',
+    territory_unit_id = QuerySelectField('Délégation territoriale', validators=[DataRequired()],
+                                         query_factory=get_territory_unit, get_label='name',
                                          get_pk=lambda a: a.id_territory_unit,
                                          render_kw=common_input)
-    email_referent = StringField('Email responsable', validators=[DataRequired(), Email()], render_kw=common_input)
+    email_referent = EmailField('Email responsable', validators=[DataRequired(), Email()], render_kw=common_input)
     service = StringField('Service', render_kw=common_input)
-    workplace_address = TextAreaField('Addresse du lieu de travail', render_kw=common_input)
-    workplace_city = StringField('Ville du lieu de travail', render_kw=common_input)
+    workplace_address = TextAreaField('Addresse du lieu de travail', validators=[DataRequired()],
+                                      render_kw=common_input)
+    workplace_city = StringField('Ville du lieu de travail', validators=[DataRequired()], render_kw=common_input)
     phone_number = StringField('Numéro de téléphone', render_kw=common_input)
-    position_type_id = QuerySelectField('Type de poste', query_factory=get_position_type, get_label='name',
+    position_type_id = QuerySelectField('Type de poste', validators=[DataRequired()], query_factory=get_position_type,
+                                        get_label='name',
                                         get_pk=lambda a: a.id_position_type,
                                         render_kw=common_input)
     comment = TextAreaField('Commentaire', render_kw=common_input)
 
-    # submit = SubmitField('Valider')
+
+class RecipientForm(FlaskForm):
+    email = EmailField('Email du destinataire', validators=[DataRequired(), Email()], render_kw=common_input)
+    subject = StringField('Subject', validators=[DataRequired()], render_kw=common_input)
+    body = TextAreaField('Corps de texte', validators=[DataRequired()], render_kw=common_input)
