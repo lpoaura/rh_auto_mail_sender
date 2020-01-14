@@ -31,4 +31,4 @@ class PersonForm(FlaskForm):
     id_position_type = QuerySelectField('Type de position', query_factory=get_position_type, get_label='name')
     comment = TextAreaField('Commentaire')
 
-    submit = SubmitField('Valider')
+    # submit = SubmitField('Valider')
