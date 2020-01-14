@@ -60,24 +60,27 @@
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Auto Mail</a>
+        <a class="navbar-brand text-monospace" href="{{ url_for('main.home') }}">autoMail@rh</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin"><i class="fas fa-tools"></i> Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.recipients') }}"><i class="fas fa-mail-bulk"></i>
+                        Destinataires</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('main.persons') }}"><i class="fas fa-users"></i> Arrivées
+                        déclarées</a>
+                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/admin"><i class="fas fa-tools"></i> Admin <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.recipients') }}"><i class="fas fa-mail-bulk"></i> Destinataires</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('main.persons') }}"><i class="fas fa-users"></i> Arrivées déclarées</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.home') }}"><i class="fas fa-user-plus"></i> Déclarer une nouvelle arrivée</a>
+                    <a class="nav-link" href="{{ url_for('main.person_add') }}"><i class="fas fa-user-plus"></i> Déclarer une
+                        nouvelle arrivée</a>
                 </li>
             </ul>
         </div>
@@ -91,9 +94,12 @@
     </div>
 </main>
 
-<footer class="footer mt-auto py-3">
-    <div class="container">
-        <span class="text-muted">LPO Auvergne-Rhône-Alpes - Frédéric CLOITRE, Pôle Valorisation des connaissances</span>
+<footer class="footer mt-auto py-3 bg-dark text-center">
+    <div class="container text-muted text-monospace">
+        <p>Application OpenSource développée avec <i class="far fa-heart"></i> en <i class="fab fa-python"></i> par & pour la LPO Auvergne-Rhône-Alpes<br>
+            2019<br>
+            <a href="https://framagit.org/lpoaura/auto_email_sender" targer="_blank" title="Lien vers le code source"><i class="fab fa-gitlab"></i> CodeSource</a></span>
+        </p>
     </div>
 </footer>
 </body>
