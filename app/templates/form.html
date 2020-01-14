@@ -3,40 +3,47 @@
 {%endblock%}
 {%block content %}
 
-
-<header class="section__play-btn mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone mdl-color--teal-100 mdl-color-text--white">
-</header>
-<div class="mdl-card mdl-cell mdl-cell--10-col-desktop mdl-cell--10-col-tablet mdl-cell--11-col-phone">
-
-    <div class="mdl-card__supporting-text">
-
-        <div class="row">
-
+<div class="row">
+    <div class="col-md-8">
+        <form method="POST" action="/">
             {{ form.hidden_tag() }}
             {% for field in form if field.widget.input_type != 'hidden' %}
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating">
+            <div class="form-group row">
                 {% if field.errors %}
                 <div class="has-error">
-                    {{ field.label(class='mdl-textfield__label') }}
-                    {{ field(class_='mdl-textfield__input', placeholder="") }}
+                    {{ field.label(class='col-sm-4 col-form-label') }}
+                    <div class="col-sm-8">
+                        {{ field(class='form-control') }}
+                    </div>
                 </div>
                 <span style="color: red;">{% for error in field.errors %}{{ error }}{% if not loop.last %}<br/>{% endif %}{% endfor %}</span>
                 {% else %}
-                {{ field.label(class='mdl-textfield__label') }}
-                {{ field(class='mdl-textfield__input', placeholder="") }}
+                {{ field.label(class='col-sm-4 col-form-label') }}
+                <div class="col-sm-8">
+                    {{ field(class='form-control') }}
+                </div>
                 {% endif %}
             </div>
             {% endfor %}
-        </div>
-        <input type="submit" value="Valider"
-               class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast mdi mdi-plus"><span
-            class="mdi mdi-plus"></input>
-        </form>
     </div>
-    <!--    <div class="mdl-card__actions">-->
-    <!--        <a href="#" class="mdl-button"><span class="mdi mdi-account-plus"></span></a>-->
-    <!--    </div>-->
+    <div class="col-md-4">
+
+
+        Veniam aut voluptas voluptates culpa quia. Animi reprehenderit rerum sed. Odio perferendis est sed odio quia.
+        Libero ex exercitationem atque temporibus voluptas dicta officia. Odio ea sint itaque dolores quia nostrum.
+
+        Quis accusamus ut corporis. Repellat qui voluptate incidunt excepturi sed odio est cum. Eos earum sit voluptas
+        repellat earum autem quia.
+
+        Quo id excepturi suscipit est. Aut voluptatem repellendus perferendis. Explicabo dignissimos et qui magnam.
+
+        Repellat voluptates sed maxime est voluptatem. Dolorum a sit voluptatem excepturi ea. Accusantium neque cumque
+        voluptatem quidem totam. Ut sunt id maiores laborum. Unde sapiente quo animi modi.
+
+        Expedita est dicta inventore. Quae reiciendis est qui laboriosam ab qui consectetur. Placeat assumenda quas
+        voluptatem debitis laboriosam autem nisi. Sequi unde delectus molestias est voluptas doloremque. Fuga quis rem
+        eos occaecati sunt culpa aut.
+
+    </div>
 </div>
-
-
 {% endblock %}
