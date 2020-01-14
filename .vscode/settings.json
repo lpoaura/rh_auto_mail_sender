@@ -1,0 +1,11 @@
+{
+    "python.pythonPath": "/home/fcloitre/.pyenv/versions/aes/bin/python",
+    "sqltools.connections": [
+        {
+            "database": "${workspaceFolder}/test.sqlite",
+            "dialect": "SQLite",
+            "name": "test"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

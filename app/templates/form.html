@@ -1,32 +1,42 @@
-{%extends "core.html"%}
-
-
-{% block header %}
+{%extends "main.html"%} {% block header %}
 <h1>{% block title %}Ajout d'un nouvel arrivant{% endblock %}</h1>
-{% endblock %}
+{%endblock%}
+{%block content %}
 
-{% block content %}
-<form method="POST" action="/">
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="name" name="name">
-        <label class="mdl-textfield__label" for="name">Nom...</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="surname" name="surname">
-        <label class="mdl-textfield__label" for="sample1">Prénom...</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="email" name="email">
-        <label class="mdl-textfield__label" for="newEmail">Nouvel email</label>
-    </div>
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="email" name="email">
-        <label class="mdl-textfield__label" for="newEmail">Nouvel email</label>
-    </div>
 
-    <p><input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-              value="Valider"/></p>
-</form>
+<header class="section__play-btn mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone mdl-color--teal-100 mdl-color-text--white">
+</header>
+<div class="mdl-card mdl-cell mdl-cell--10-col-desktop mdl-cell--10-col-tablet mdl-cell--11-col-phone">
 
-</form>
+    <div class="mdl-card__supporting-text">
+
+        <div class="row">
+
+            {{ form.hidden_tag() }}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating">
+                {% if field.errors %}
+                <div class="has-error">
+                    {{ field.label(class='mdl-textfield__label') }}
+                    {{ field(class_='mdl-textfield__input', placeholder="") }}
+                </div>
+                <span style="color: red;">{% for error in field.errors %}{{ error }}{% if not loop.last %}<br/>{% endif %}{% endfor %}</span>
+                {% else %}
+                {{ field.label(class='mdl-textfield__label') }}
+                {{ field(class='mdl-textfield__input', placeholder="") }}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Valider"
+               class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast mdi mdi-plus"><span
+            class="mdi mdi-plus"></input>
+        </form>
+    </div>
+    <!--    <div class="mdl-card__actions">-->
+    <!--        <a href="#" class="mdl-button"><span class="mdi mdi-account-plus"></span></a>-->
+    <!--    </div>-->
+</div>
+
+
 {% endblock %}
