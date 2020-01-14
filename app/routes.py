@@ -41,6 +41,9 @@ def person_add():
             recipient_list = Recipient.query.all()
             for recipient in recipient_list:
                 sendmail(recipient.subject, recipient.body, recipient.email, person_data)
+            sendmail("Déclaration d'une nouvelle arrivée",
+                     "Votre déclaration pour {} {} a bien été transmise. \n\n[Ceci est un message automatique]".format(
+                         new_person.name, new_person.surname), new_person.email_referent, person_data)
 
         except Exception as e:
             flash(e)

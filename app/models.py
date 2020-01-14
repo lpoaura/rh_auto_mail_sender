@@ -36,6 +36,7 @@ class RecipientAdmin(ModelView):
 
 class Person(db.Model, SaveMixin):
     id_person = db.Column(db.Integer, primary_key=True)
+    email_declarator = db.Column(db.String(256), nullable=False)
     name = db.Column(db.String(80), nullable=False)
     surname = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(256), nullable=False)

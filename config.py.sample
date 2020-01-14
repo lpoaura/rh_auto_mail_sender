@@ -1,0 +1,12 @@
+SECRET_KEY='secretKey'
+
+DB_FILE_NAME='dbFileName'
+
+# SMTP Params
+SMTP_HOST='smtpHost'
+SMTP_PORT=int('smtpPort')
+SMTP_LOGIN='smtpLogin'
+SMTP_PWD='smtpPwd'
+SMTP_STARTTLS=smtpStartTls
+
+
