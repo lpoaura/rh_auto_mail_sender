@@ -1,8 +1,10 @@
+from datetime import datetime
+
 from flask import Blueprint, render_template, request, redirect, url_for
+
+from app.form import PersonForm
 from app.models import Person, EmailReceiverModel
 from app.utils import sendmail
-from app.form import PersonForm
-from datetime import datetime
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
@@ -36,6 +38,9 @@ def home():
             recipients = EmailReceiverModel.query.all()
             for recipient in recipients:
                 sendmail(recipient.subject, recipient.body, recipient.email, person_data)
+            sendmail("Déclaration d'une nouvelle arrivée",
+                     "Votre déclaration pour {} {} a bien été transmise. \n\n[Ceci est un message automatique]".format(
+                         new_person.name, new_person.surname), new_person.email_referent, person_data)
 
         except Exception as e:
             print('ERROR', e)
@@ -61,6 +66,7 @@ def persons():
         p_dict = dict((col, getattr(p, col)) for col in p.__table__.columns.keys())
         persons_dict.append(p_dict)
     return render_template("persons.html", persons=persons_dict)
+
 
 @main_bp.route('/recipients')
 def recipients():
