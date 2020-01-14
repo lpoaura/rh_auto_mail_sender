@@ -17,14 +17,14 @@ def home():
 @main_bp.route("/person/add", methods=["GET", "POST"])
 def person_add():
     person_form = PersonForm()
-
+    print('<person_add Method>', request.method)
     if request.method == 'POST':
         data = request.form
         try:
             person_data = {}
             if data:
                 for d in data:
-                    # print(d, data[d])
+                    print(d, data[d])
                     if hasattr(Person, d) and data[d] != '':
                         person_data[d] = data[d]
 
@@ -76,7 +76,7 @@ def persons():
 
 
 @main_bp.route("/recipient/add", methods=["GET", "POST"])
-def add_recipient():
+def recipient_add():
     recipient_form = RecipientForm()
 
     if request.method == 'POST':
@@ -97,13 +97,13 @@ def add_recipient():
             flash(e)
             return render_template("recipient_form.html", form=recipient_form)
 
-        return redirect(url_for('main.recipients'))
+        return redirect(url_for('main.recipients_list'))
 
     return render_template("recipient_form.html", form=recipient_form)
 
 
 @main_bp.route('/recipients')
-def recipients():
+def recipients_list():
     try:
         recipients = Recipient.query.all()
         recipients_dict = []
