@@ -1,0 +1,17 @@
+{%extends "main.html"%}
+{%block content %}
+{% block header %}
+<h1><i class="fa fa-user"></i> {% block title %}Nouvelle arrivée enregistrée{% endblock %}</h1>
+{%endblock%}
+
+<table>
+    <tbody>
+    {% for key, segment in person.items()%}
+    <tr>
+        <td>{{ key }}</td>
+        <td>{{ segment }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{%endblock%}

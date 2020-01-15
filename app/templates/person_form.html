@@ -1,0 +1,70 @@
+{%extends "main.html"%}
+{%block content %}
+{% block header %}
+<div class="row">
+    <h1><i class="fa fa-user-plus"></i> {% block title %}Ajout d'un nouvel arrivant{% endblock %}</h1>
+    {% endblock %}
+<!--    {% from "_helpers.html" import render_field %}-->
+<!--    {% with messages = get_flashed_messages() %}-->
+<!--    {% if messages %}-->
+<!--    {% for message in messages %}-->
+<!--    <div class="alert alert-danger">{{ message }}</div>-->
+<!--    {% endfor %}-->
+<!--    {% endif %}-->
+<!--    {% endwith %}-->
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="alert alert-info">
+            <h3><i class="fas fa-info-circle"></i> Note</h3>
+            <p>Ce formulaire est à renseigner pour toutes les arrivées de nouveau/nouvelle collègue, indépendamment du
+                type de contrat. Merci de le renseigner au moins 2 semaines avant le début de la mission. Son
+                remplissage permet
+                la génération automatique de messages pour:
+            <ul>
+                <li>créer l'adresse mail;</li>
+                <li>créer les accès informatiques;</li>
+                <li>informer Eléonore de l'arrivée de la personne.</li>
+            </ul>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h3><i class="fas fa-user-edit"></i> Formulaire de déclaration</h3>
+        <form method="POST" action="{{url_for('main.person_add')}}">
+            {{ form.hidden_tag() }}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="form-group row">
+                {% if field.errors %}
+                <div class="has-error">
+                    {{ field.label(class='col-sm-4 col-form-label') }}
+                    <div class="col-sm-8">
+                        {{ field }}
+                    </div>
+                </div>
+                <span style="color: red;">{% for error in field.errors %}{{ error }}{% if not loop.last %}<br/>{% endif %}{% endfor %}</span>
+                {% else %}
+                {{ field.label(class='col-sm-4 col-form-label') }}
+                <div class="col-sm-8">
+                    {{ field }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="text-right">
+                <input type="submit" value="Valider" class="btn btn-success btn-block">
+            </div>
+            <script>
+                $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    language: "fr",
+                    calendarWeeks: true,
+                    todayHighlight: true
+                });
+            </script>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{%extends "main.html"%}
+{%block content %}
+{% block header %}
+<div class="row">
+    <h1><i class="fas fa-mail-bulk"></i>{% block title %}Destinataires{% endblock %}</h1>
+    {%endblock%}
+</div>
+<div class="row">
+    <div class="col">
+        {% if recipients|length > 0 %}
+        <table id="persons" class="table table-condensed table-responsive">
+
+            <thead>
+            <tr>
+                {% for key in recipients[0].keys() %}
+                <th scope="col">{{ key }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for recipient in recipients %}
+            <tr>
+                {% for value in recipient.values() %}
+                <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script type="text/javascript">
+
+            $('#persons').DataTable();
+
+        </script>
+        {% else %}
+        <div class="alert alert-warning">Aucun destinataire</div>
+        {% endif %}
+        <a class="btn btn-lg btn-block btn-success" href="{{ url_for('main.recipient_add') }}"><i class="fas fa-mail-bulk"></i>
+            Ajouter un
+            nouveau destinataire</a>
+    </div>
+</div>
+{%endblock%}

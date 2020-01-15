@@ -1,0 +1,35 @@
+{%extends "main.html"%}
+{%block content %}
+{% block header %}
+<h1><i class="fa fa-home"></i>{% block title %}Accueil{% endblock %}</h1>
+{%endblock%}
+
+<style>
+    .jumbotron {
+        height: 100%;
+        width: 100%;
+    }
+
+    .container {
+        width: 1025px;
+    }
+
+    .jumbotron .container {
+        max-width: 100%;
+    }
+</style>
+
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Plateforme de déclaration des nouveaux arrivants au sein des salariés de la LPO AuRA</h1>
+        <div class="row">
+            <div class="col text-center">
+                <a class="btn btn-success btn-lg" href="{{ url_for('main.person_add') }}"><i
+                        class="fa fa-user-plus"></i> Déclarer une nouvelle
+                    arrivée</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
