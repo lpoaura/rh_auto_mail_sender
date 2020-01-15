@@ -1,9 +1,11 @@
-from gunicorn.app.base import BaseApplication
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from gunicorn.app.base import BaseApplication
+
 import config
 
 migrate = Migrate()
@@ -17,8 +19,8 @@ def version():
         version = VERSION.read().replace("\n", "n")
         return version
 
-class SaveMixin(object):
 
+class SaveMixin(object):
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
@@ -71,7 +73,6 @@ def sendmail(subject, body, recipient, datas):
         msg['Subject'] = title
         message = MIMEText(body)
         msg.attach(message)
-
 
         # message = 'Subject: {subject}\n\n{body}'.format(subject=title, body=body)
 

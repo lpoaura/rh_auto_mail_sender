@@ -65,5 +65,17 @@ class Person(db.Model, SaveMixin):
         return "{} {}".format(self.name, self.username)
 
 
+class FormFields(db.Model):
+    id_form_field=db.Column(db.Integer, primary_key=True, nullable=False)
+    field_name=db.Column(db.String(50), nullable=False)
+    field_label=db.Column(db.String(50), nullable=False)
+    field_type=db.Column(db.String(256), nullable=False)
+    field_class=db.Column(db.String(256), nullable=True)
+
+
+class PersonJson(db.Model, SaveMixin):
+    id_person_json=db.Column(db.Integer, primary_key=True, nullable=False)
+    json_data=db.Column(db.JSON, nullable=False)
+
 class PersonAdmin(ModelView):
     can_create = False

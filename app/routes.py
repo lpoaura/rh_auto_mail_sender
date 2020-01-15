@@ -1,8 +1,10 @@
 from datetime import datetime
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+
 import config
-from app.form import PersonForm, RecipientForm
-from app.models import Person, Recipient
+from app.form import PersonForm, RecipientForm, str_to_class
+from app.models import Person, Recipient, FormFields, PersonJson
 from app.utils import sendmail, version
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
@@ -59,7 +61,6 @@ def person_add():
                     new_person_dict[k] = 'Non défini'
 
             print('<new_person_dict 2>', new_person_dict)
-
 
             for recipient in recipient_list:
                 sendmail(recipient.subject, recipient.body, recipient.email, new_person_dict)
@@ -139,3 +140,53 @@ def recipients_list():
     except Exception as e:
         print("<recipients error>", e)
         return render_template("problem.html")
+
+
+@main_bp.route('/testform', methods=["GET", "POST"])
+def test_form():
+    recipient_list = Recipient.query.all()
+    try:
+        form_fields = FormFields.query.all()
+
+        from flask_wtf import FlaskForm
+
+        class F(FlaskForm):
+            pass
+
+        common_input = {'class': 'form-control'}
+        for field in form_fields:
+            field_class = common_input.copy()
+
+            print('field.field_class', field.field_class)
+            if field.field_class is not None:
+                field_class['class'] = '{} {}'.format(common_input['class'], field.field_class)
+                print(field_class)
+            setattr(F, field.field_name, str_to_class(field.field_type)(field.field_label, render_kw=field_class))
+
+        if request.method == 'POST':
+            data = request.form
+            print(data)
+            try:
+                data_dict = {}
+                if data:
+                    for d in data:
+                        print(data[d], d)
+                        if d != 'csrf_token':
+                            data_dict[d] = data[d]
+                            print('<test_form post result>', data_dict)
+
+                new_person = PersonJson()
+                new_person.json_data = data_dict
+                new_person.save_to_db()
+                print('<new_person_json>', new_person.id_person_json)
+
+            except Exception as e:
+                print('<error testform result>', e)
+
+
+
+
+    except Exception as e:
+        print('<error test_form>', e)
+
+    return render_template("test_form.html", form=F(), recipients=recipient_list)
