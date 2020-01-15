@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 import config
 from app.form import PersonForm, RecipientForm
 from app.models import Person, Recipient
-from app.utils import sendmail
+from app.utils import sendmail, version
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
@@ -12,7 +12,7 @@ main_bp = Blueprint('main', __name__, template_folder='templates')
 def global_variables():
     values = {}
     values["app_name"] = config.APP_NAME
-
+    values["version"] = version()
     return values
 
 

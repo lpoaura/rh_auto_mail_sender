@@ -11,6 +11,12 @@ migrate = Migrate()
 db = SQLAlchemy()
 
 
+def version():
+    """Return SITE VERSION to frontend"""
+    with open("VERSION", "r") as VERSION:
+        version = VERSION.read().replace("\n", "n")
+        return version
+
 class SaveMixin(object):
 
     def save_to_db(self):
