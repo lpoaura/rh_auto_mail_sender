@@ -12,52 +12,52 @@
         <div class="alert alert-info">
             <h3><i class="fas fa-info-circle"></i> Note</h3>
             <p>Les contenus des mails sont automatiquement générés à partir des modèles que vous créerez ici. Pour ce
-                faire, il faut les indiquer dans le Sujet
-            <pre>subject</pre>
-            et/ou dans le corps du texte
-            <pre>body</pre>
-            . Ces variables doivent obligatoirement être entourées d'accolades. A titre d'exemple, le corps de texte
-            suivant
-            <pre>Le salarié {name} {surname}...</pre>
-            , ou
-            <pre>name</pre>
-            est <i>MANCEL</i> et
-            <pre>surname</pre>
-            est <i>Benoit</i> donnera ainsi un mail contenant le message suivant
-            <pre>Le salarié MANCEL Benoit...</pre>
+                faire, il faut les indiquer dans le Sujet <code>subject</code> et/ou dans le corps du texte
+                <code>body</code>. Ces variables doivent obligatoirement être entourées d'accolades. A titre d'exemple,
+                le corps de texte suivant <code>Le salarié {name} {surname}...</code> , ou <code>name</code> est <i>MANCEL</i>
+                et <code>surname</code> est <i>Benoit</i> donnera ainsi un mail contenant le message suivant <code>Le
+                    salarié MANCEL Benoit...</code>
             <ul>
                 <li>
-                    <pre>name</pre>
-                    : Nom
+                    Email du déclarant: <code>{email_declarator}</code>
                 </li>
                 <li>
-                    <pre>surname</pre>
-                    : Prénom
+                    Nom: <code>{name}</code>
                 </li>
                 <li>
-                    <pre>surname</pre>
-                    : Prénom
+                    Email: <code>{email}</code>
                 </li>
-
+                <li>
+                    Date d'arrivée: <code>{arrival_date}</code>
+                </li>
+                <li>
+                    Date de départ: <code>{departure_date}</code>
+                </li>
+                <li>
+                    Délégation territoriale: <code>{territory_unit_id}</code>
+                </li>
+                <li>
+                    Email responsable: <code>{email_referent}</code>
+                </li>
+                <li>
+                    Service/Pôle: <code>{service}</code>
+                </li>
+                <li>
+                    Adresse du lieu de travail: <code>{workplace_address}</code>
+                </li>
+                <li>
+                    Ville du lieu de travail: <code>{workplace_city}</code>
+                </li>
+                <li>
+                    Numéro de téléphone: <code>{phone_number}</code>
+                </li>
+                <li>
+                    Type de poste: <code>{position_type}</code>
+                </li>
+                <li>
+                    Commentaire: <code>{comment}</code>
+                </li>
             </ul>
-            <!--            surname = StringField('Prénom', validators=[DataRequired()], render_kw=common_input)-->
-            <!--            email = StringField('Email', validators=[DataRequired(), Email()], render_kw=common_input)-->
-            <!--            arrival_date = DateField('Date d\'arrivée', validators=[DataRequired()], render_kw=datepicker)-->
-            <!--            departure_date = DateField('Date de départ', render_kw=datepicker)-->
-            <!--            territory_unit_id = QuerySelectField('Délégation territoriale', query_factory=get_territory_unit,-->
-            <!--            get_label='name',-->
-            <!--            get_pk=lambda a: a.id_territory_unit,-->
-            <!--            render_kw=common_input)-->
-            <!--            email_referent = StringField('Email responsable', validators=[DataRequired(), Email()],-->
-            <!--            render_kw=common_input)-->
-            <!--            service = StringField('Service', render_kw=common_input)-->
-            <!--            workplace_address = TextAreaField('Addresse du lieu de travail', render_kw=common_input)-->
-            <!--            workplace_city = StringField('Ville du lieu de travail', render_kw=common_input)-->
-            <!--            phone_number = StringField('Numéro de téléphone', render_kw=common_input)-->
-            <!--            position_type_id = QuerySelectField('Type de poste', query_factory=get_position_type, get_label='name',-->
-            <!--            get_pk=lambda a: a.id_position_type,-->
-            <!--            render_kw=common_input)-->
-            <!--            comment = TextAreaField('Commentaire', render_kw=common_input)-->
         </div>
     </div>
     <div class="col-md-8">

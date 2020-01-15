@@ -1,5 +1,4 @@
 #!/bin/sh
-export DB_FILE_NAME=${DB_FILE_NAME:-db.sqlite}
 export SECRET_KEY=${SECRET_KEY:-$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c50)}
 
 export SMTP_PORT=${SMTP_PORT:-587}
@@ -11,7 +10,6 @@ export SMTP_STARTTLS=${SMTP_STARTTLS:-True}
 if [ ! -f /data/config.py ]; then
     echo "generate new config file"
     cp /app/config.py.sample /data/config.py
-    sed -i "s/dbFileName/${DB_FILE_NAME}/g" /data/config.py
     sed -i "s/secretKey/${SECRET_KEY}/g" /data/config.py
     sed -i "s/smtpHost/${SMTP_HOST}/g" /data/config.py
     sed -i "s/smtpPort/${SMTP_PORT}/g" /data/config.py
@@ -32,8 +30,8 @@ flask db init
 flask db migrate
 flask db upgrade
 
-mv /app/${DB_FILE_NAME} /data/${DB_FILE_NAME}
-ln -s /data/${DB_FILE_NAME} /app/${DB_FILE_NAME}
+mv /app/db.sqlite /data/db.sqlite
+ln -s /data/db.sqlite /app/db.sqlite
 
 python -m server
 

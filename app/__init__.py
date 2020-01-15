@@ -16,7 +16,7 @@ def create_app():
     app.config.from_object(conf)
 
     with Path(__file__).parent.parent as root_dir:
-        database_file = "sqlite:///{}".format(os.path.join(root_dir, app.config["DB_FILE_NAME"]))
+        database_file = "sqlite:///{}".format(os.path.join(root_dir, 'db.sqlite'))
         print('<DB FILE : {}>'.format(database_file))
         app.config["SQLALCHEMY_DATABASE_URI"] = database_file
     db.init_app(app)
@@ -24,7 +24,7 @@ def create_app():
 
     app.register_blueprint(main_bp, url_prefix="/")
 
-    admin = Admin(app, name='AutoMailSender', template_mode='bootstrap3')
+    admin = Admin(app, name=app.config["APP_NAME"], template_mode='bootstrap3')
 
     from app.models import TerritoryUnit, PositionType,Person, Recipient, RecipientAdmin, PersonAdmin
     admin.add_view(PersonAdmin(Person, db.session))

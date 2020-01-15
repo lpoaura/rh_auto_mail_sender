@@ -1,11 +1,18 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-
+import config
 from app.form import PersonForm, RecipientForm
 from app.models import Person, Recipient
 from app.utils import sendmail
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
+
+@main_bp.context_processor
+def global_variables():
+    values = {}
+    values["app_name"] = config.APP_NAME
+
+    return values
 
 
 @main_bp.route("/", methods=["GET", "POST"])

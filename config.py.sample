@@ -1,6 +1,6 @@
 SECRET_KEY='secretKey'
 
-DB_FILE_NAME='dbFileName'
+APP_NAME='myAppName'
 
 # SMTP Params
 SMTP_HOST='smtpHost'

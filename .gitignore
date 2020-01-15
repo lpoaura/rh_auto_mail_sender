@@ -134,3 +134,7 @@ config.py
 
 # flask-migrate
 migrations
+
+# db
+*.sqlite
+*.db
