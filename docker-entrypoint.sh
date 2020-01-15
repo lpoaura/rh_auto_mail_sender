@@ -20,8 +20,10 @@ else
     echo "config file already exists"
 fi
 
-rm -f /app/config.py
-ln -s /data/config.py /app/config.py
+if [ -f /app/config.py ]; then
+    rm -f /app/config.py
+    ln -s /data/config.py /app/config.py
+fi
 
 export FLASK_APP=app
 cat /app/config.py
@@ -30,8 +32,19 @@ flask db init
 flask db migrate
 flask db upgrade
 
-mv /app/db.sqlite /data/db.sqlite
+if [ ! -f /data/db.sqlite ]; then
+    mv /app/db.sqlite /data/db.sqlite
+fi
+
+rm -f /app/db.sqlite
 ln -s /data/db.sqlite /app/db.sqlite
+
+if [ ! -d /data/migrations ]; then
+    mv /app/migrations /data/migrations
+fi
+rm -f /app/migrations
+ln -s /data/migrations /app/migrations
+
 
 python -m server
 

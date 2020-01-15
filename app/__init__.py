@@ -10,7 +10,6 @@ from flask_admin.base import MenuLink
 from flask import url_for
 
 
-
 def create_app():
     app = Flask(__name__)
     app.config.from_object(conf)
@@ -26,14 +25,13 @@ def create_app():
 
     admin = Admin(app, name=app.config["APP_NAME"], template_mode='bootstrap3')
 
-    from app.models import TerritoryUnit, PositionType,Person, Recipient, RecipientAdmin, PersonAdmin
+    from app.models import TerritoryUnit, PositionType, Person, Recipient, RecipientAdmin, PersonAdmin, ContractType
     admin.add_view(PersonAdmin(Person, db.session))
     admin.add_view(ModelView(TerritoryUnit, db.session))
+    admin.add_view(ModelView(ContractType, db.session))
     admin.add_view(ModelView(PositionType, db.session))
     admin.add_view(RecipientAdmin(Recipient, db.session))
     admin.add_link(MenuLink(name='Site publique', category='', url='/'))
-    
-
 
     with app.app_context():
         db.create_all()

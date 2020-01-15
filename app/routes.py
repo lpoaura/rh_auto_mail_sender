@@ -7,6 +7,7 @@ from app.utils import sendmail
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
+
 @main_bp.context_processor
 def global_variables():
     values = {}
@@ -23,6 +24,7 @@ def home():
 @main_bp.route("/person/add", methods=["GET", "POST"])
 def person_add():
     person_form = PersonForm()
+    recipient_list = Recipient.query.all()
     print('<person_add Method>', request.method)
     if request.method == 'POST':
         data = request.form
@@ -43,10 +45,24 @@ def person_add():
             new_person.save_to_db()
             id = new_person.id_person
             print('<person_add id>', id)
+            print('<person_row>', new_person)
+
             flash('Merci pour cette participation')
-            recipient_list = Recipient.query.all()
+
+            new_person_dict = dict((col, getattr(new_person, col)) for col in new_person.__table__.columns.keys())
+            print('<new_person_dict 1>', type(new_person_dict), new_person_dict)
+
+            for k, v in new_person_dict.items():
+                print(k, v)
+                if new_person_dict[k] == None:
+                    print(k)
+                    new_person_dict[k] = 'Non défini'
+
+            print('<new_person_dict 2>', new_person_dict)
+
+
             for recipient in recipient_list:
-                sendmail(recipient.subject, recipient.body, recipient.email, person_data)
+                sendmail(recipient.subject, recipient.body, recipient.email, new_person_dict)
             sendmail("Déclaration d'une nouvelle arrivée",
                      "Votre déclaration pour {} {} a bien été transmise. \n\n[Ceci est un message automatique]".format(
                          new_person.name, new_person.surname), new_person.email_referent, person_data)
@@ -54,11 +70,11 @@ def person_add():
         except Exception as e:
             flash(e)
             print("<person_add error>", e)
-            return render_template("person_form.html", form=person_form)
+            return render_template("person_form.html", form=person_form, recipients=recipient_list)
 
         return redirect(url_for('main.person', id=id))
 
-    return render_template("person_form.html", form=person_form)
+    return render_template("person_form.html", form=person_form, recipients=recipient_list)
 
 
 @main_bp.route('/person/<int:id>')
@@ -109,7 +125,6 @@ def recipient_add():
         return redirect(url_for('main.recipients_list'))
 
     return render_template("recipient_form.html", form=recipient_form)
-
 
 
 @main_bp.route('/recipients')

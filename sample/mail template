@@ -1,0 +1,67 @@
+Destinataire: RH
+
+Sujet: Arrivée d'un nouveau collègue
+
+Bonjour,
+
+Il est prévu que {name} {surname} rejoigne l'équipe à compter du {arrival_date} pour un {contract_type} dont l'intitulé est {position_type} jusqu'au {departure_date}.
+
+Voici les informations principales :
+- Délégation territoriale : {territory_unit}
+- Service : {service}
+- Adresse du lieu de travail : {workplace_address}
+- Ville du lieu de travail : {workplace_city}
+- Numéro de téléphone : {phone_number}
+
+Merci d'avance
+
+La LPO AuRA
+
+[Ceci est un message généré automatiquement]
+
+--
+
+Destinataire: Support technique
+
+Sujet: Demande de création de compte AD
+
+Bonjour,
+
+Il est prévu que {name} {surname} rejoigne l'équipe à compter du {arrival_date} pour un {contract_type} dont l'intitulé est {position_type} jusqu'au {departure_date}.
+
+Voici les informations principales :
+- Délégation territoriale : {territory_unit}
+- Service : {service}
+- Adresse du lieu de travail : {workplace_address}
+- Ville du lieu de travail : {workplace_city}
+- Numéro de téléphone : {phone_number}
+
+Merci d'avance
+
+La LPO AuRA
+
+[Ceci est un message généré automatiquement]
+
+--
+Destinataire: Service mail
+
+Sujet: Demande de création d'adresse mail
+
+Bonjour,
+
+Pouvez-vous créer l'adresse mail de {surname} {name} ({email})
+Voici les informations à affecter au compte :
+
+- Délégation territoriale : {territory_unit}
+- Service : {service}
+- Adresse du lieu de travail : {workplace_address}
+- Ville du lieu de travail : {workplace_city}
+- Numéro de téléphone : {phone_number}
+
+Merci d'avance
+
+La LPO AuRA
+
+[Ceci est un message généré automatiquement]
+
+

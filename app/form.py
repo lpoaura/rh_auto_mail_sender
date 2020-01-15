@@ -5,11 +5,11 @@ from wtforms.fields import DateField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email
 
-from app.models import TerritoryUnit, PositionType
+from app.models import TerritoryUnit, PositionType, ContractType
 
 common_input = {'class': 'form-control'}
 datepicker = {'class': 'form-control datepicker'}
-big_textarea_input= common_input
+big_textarea_input= common_input.copy()
 big_textarea_input['rows']=20
 
 
@@ -19,6 +19,9 @@ def get_territory_unit():
 
 def get_position_type():
     return PositionType.query
+
+def get_contract_type():
+    return ContractType.query
 
 
 class PersonForm(FlaskForm):
@@ -39,6 +42,10 @@ class PersonForm(FlaskForm):
                                       render_kw=common_input)
     workplace_city = StringField('Ville du lieu de travail', validators=[DataRequired()], render_kw=common_input)
     phone_number = StringField('Numéro de téléphone', render_kw=common_input)
+    contract_type = QuerySelectField('Type de contrat', validators=[DataRequired()], query_factory=get_contract_type,
+                                        get_label='name',
+                                        get_pk=lambda a: a.name,
+                                        render_kw=common_input)
     position_type = QuerySelectField('Type de poste', validators=[DataRequired()], query_factory=get_position_type,
                                         get_label='name',
                                         get_pk=lambda a: a.name,

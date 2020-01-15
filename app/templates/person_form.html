@@ -4,14 +4,14 @@
 <div class="row">
     <h1><i class="fa fa-user-plus"></i> {% block title %}Ajout d'un nouvel arrivant{% endblock %}</h1>
     {% endblock %}
-<!--    {% from "_helpers.html" import render_field %}-->
-<!--    {% with messages = get_flashed_messages() %}-->
-<!--    {% if messages %}-->
-<!--    {% for message in messages %}-->
-<!--    <div class="alert alert-danger">{{ message }}</div>-->
-<!--    {% endfor %}-->
-<!--    {% endif %}-->
-<!--    {% endwith %}-->
+    <!--    {% from "_helpers.html" import render_field %}-->
+    <!--    {% with messages = get_flashed_messages() %}-->
+    <!--    {% if messages %}-->
+    <!--    {% for message in messages %}-->
+    <!--    <div class="alert alert-danger">{{ message }}</div>-->
+    <!--    {% endfor %}-->
+    <!--    {% endif %}-->
+    <!--    {% endwith %}-->
 
 </div>
 <div class="row">
@@ -23,9 +23,9 @@
                 remplissage permet
                 la génération automatique de messages pour:
             <ul>
-                <li>créer l'adresse mail;</li>
-                <li>créer les accès informatiques;</li>
-                <li>informer Eléonore de l'arrivée de la personne.</li>
+                {% for recipient in recipients %}
+                <li>{{recipient.email}} : {{recipient.subject}}</li>
+                {% endfor %}
             </ul>
             </p>
         </div>

@@ -59,7 +59,8 @@ def sendmail(subject, body, recipient, datas):
         print('content', body)
 
         msg = MIMEMultipart()
-        msg['From'] = datas['email_declarator']
+        msg['reply-to'] = datas['email_declarator']
+        msg['From'] = config.SMTP_LOGIN
         msg['To'] = recipient
         msg['Subject'] = title
         message = MIMEText(body)
