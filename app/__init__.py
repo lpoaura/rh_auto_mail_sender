@@ -25,13 +25,14 @@ def create_app():
 
     admin = Admin(app, name=app.config["APP_NAME"], template_mode='bootstrap3')
 
-    from app.models import TerritoryUnit, PositionType, Person, Recipient, RecipientAdmin, PersonAdmin, ContractType, FormFields
+    from app.models import TerritoryUnit, PositionType, Person, Recipient, RecipientAdmin, PersonAdmin, ContractType, FormFields, PersonJson
     admin.add_view(PersonAdmin(Person, db.session))
     admin.add_view(ModelView(TerritoryUnit, db.session))
     admin.add_view(ModelView(ContractType, db.session))
     admin.add_view(ModelView(PositionType, db.session))
     admin.add_view(RecipientAdmin(Recipient, db.session))
     admin.add_view(RecipientAdmin(FormFields, db.session))
+    admin.add_view(RecipientAdmin(PersonJson, db.session))
 
     admin.add_link(MenuLink(name='Site publique', category='', url='/'))
 
