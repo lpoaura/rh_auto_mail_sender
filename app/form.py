@@ -25,7 +25,7 @@ def get_contract_type():
 
 
 class PersonForm(FlaskForm):
-    email_declarator = EmailField("Votre email (pour envoie d'une confirmation)", validators=[DataRequired(), Email()],
+    email_declarator = EmailField("Votre email (pour envoi d'une confirmation)", validators=[DataRequired(), Email()],
                                    render_kw=common_input)
     name = StringField('Nom', validators=[DataRequired()], render_kw=common_input)
     surname = StringField('Prénom', validators=[DataRequired()], render_kw=common_input)
