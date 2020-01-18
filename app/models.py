@@ -21,7 +21,7 @@ class ContractType(db.Model, SaveMixin):
 
 
 class TeamsList(db.Model, SaveMixin):
-    id_contract_type = db.Column(db.Integer, primary_key=True)
+    id_teams_list = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False, unique=True)
 
 
