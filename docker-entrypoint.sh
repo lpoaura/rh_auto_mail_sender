@@ -10,6 +10,7 @@ export SMTP_STARTTLS=${SMTP_STARTTLS:-True}
 if [ ! -f /data/config.py ]; then
     echo "generate new config file"
     cp /app/config.py.sample /data/config.py
+    sed -i "s/myAppName/${APP_NAME}/g" /data/config.py
     sed -i "s/secretKey/${SECRET_KEY}/g" /data/config.py
     sed -i "s/smtpHost/${SMTP_HOST}/g" /data/config.py
     sed -i "s/smtpPort/${SMTP_PORT}/g" /data/config.py
