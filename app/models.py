@@ -14,7 +14,13 @@ class PositionType(db.Model, SaveMixin):
     id_position_type = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False, unique=True)
 
+
 class ContractType(db.Model, SaveMixin):
+    id_contract_type = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(256), nullable=False, unique=True)
+
+
+class TeamsList(db.Model, SaveMixin):
     id_contract_type = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False, unique=True)
 
@@ -55,6 +61,7 @@ class Person(db.Model, SaveMixin):
     contract_type = db.Column(db.String(256), db.ForeignKey('contract_type.name'), nullable=False)
     position_type = db.Column(db.String(256), db.ForeignKey('position_type.name'), nullable=False)
     job_title = db.Column(db.String(256), nullable=True)
+    teams_list = db.Column(db.String(1000), nullable=True)
     comment = db.Column(db.String(), nullable=True)
     create_ts = db.Column(db.DateTime, nullable=False, default=datetime.now())
 

@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+
 import config
 from app.form import PersonForm, RecipientForm
 from app.models import Person, Recipient
@@ -32,9 +34,12 @@ def person_add():
             person_data = {}
             if data:
                 for d in data:
-                    print(d, data[d])
+                    print("key {}, type {}, data {}".format(d, type(data.getlist(d)), data.getlist(d)))
                     if hasattr(Person, d) and data[d] != '':
-                        person_data[d] = data[d]
+                        if len(data.getlist(d)) == 1:
+                            person_data[d] = data[d]
+                        else:
+                            person_data[d] = '; '.join(data.getlist(d))
 
             # Convert Date string to python datetime object
             person_data['arrival_date'] = datetime.strptime(person_data['arrival_date'], '%Y-%m-%d').date()
@@ -59,7 +64,6 @@ def person_add():
                     new_person_dict[k] = 'Non défini'
 
             print('<new_person_dict 2>', new_person_dict)
-
 
             for recipient in recipient_list:
                 sendmail(recipient.subject, recipient.body, recipient.email, new_person_dict)
