@@ -45,25 +45,28 @@ class RecipientAdmin(ModelView):
 
 
 class Person(db.Model, SaveMixin):
-    id_person = db.Column(db.Integer, primary_key=True)
-    email_declarator = db.Column(db.String(256), nullable=False)
-    name = db.Column(db.String(80), nullable=False)
-    surname = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(256), nullable=False)
-    arrival_date = db.Column(db.Date, nullable=False)
-    departure_date = db.Column(db.Date, nullable=True)
-    territory_unit = db.Column(db.String(256), db.ForeignKey('territory_unit.name'), nullable=False)
-    email_referent = db.Column(db.String(256), nullable=False)
-    service = db.Column(db.String(256), nullable=True)
-    workplace_address = db.Column(db.String(1000), nullable=True)
-    workplace_city = db.Column(db.String(256), nullable=True)
-    phone_number = db.Column(db.String(256), nullable=False)
-    contract_type = db.Column(db.String(256), db.ForeignKey('contract_type.name'), nullable=False)
-    position_type = db.Column(db.String(256), db.ForeignKey('position_type.name'), nullable=False)
-    job_title = db.Column(db.String(256), nullable=True)
-    teams_list = db.Column(db.String(1000), nullable=True)
-    comment = db.Column(db.String(), nullable=True)
-    create_ts = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    id_person = db.Column(db.Integer, primary_key=True, doc='ID de la donnée')
+    email_declarator = db.Column(db.String(256), nullable=False, doc='Email du déclarant')
+    name = db.Column(db.String(80), nullable=False, doc='Nom')
+    surname = db.Column(db.String(80), nullable=False, doc='Prénom')
+    email = db.Column(db.String(256), nullable=False, doc='Email')
+    arrival_date = db.Column(db.Date, nullable=False, doc="Date d'arrivée")
+    departure_date = db.Column(db.Date, nullable=True, doc="Date de départ")
+    territory_unit = db.Column(db.String(256), db.ForeignKey('territory_unit.name'), nullable=False,
+                               doc="Délégation territoriale")
+    email_referent = db.Column(db.String(256), nullable=False, doc="Email du responsable")
+    service = db.Column(db.String(256), nullable=True, doc="Service de rattachement")
+    workplace_address = db.Column(db.String(1000), nullable=True, doc="Adresse du lieu de travail")
+    workplace_city = db.Column(db.String(256), nullable=True, doc="Ville du lieu de travail")
+    phone_number = db.Column(db.String(256), nullable=False, doc="Numéro de téléphone")
+    contract_type = db.Column(db.String(256), db.ForeignKey('contract_type.name'), nullable=False,
+                              doc="Type de contrat")
+    position_type = db.Column(db.String(256), db.ForeignKey('position_type.name'), nullable=False, doc="Type de poste")
+    job_title = db.Column(db.String(256), nullable=True, doc="Intitulé du poste")
+    teams_list = db.Column(db.String(1000), nullable=True, doc="Listes TEAMS")
+    comment = db.Column(db.String(), nullable=True, doc="Commentaire")
+    create_ts = db.Column(db.DateTime, nullable=False, default=datetime.now(),
+                          doc="Date/heure de création de la donnée")
 
     def __repr__(self):
         return "<PersonModel: {} {}>".format(self.name, self.surname)

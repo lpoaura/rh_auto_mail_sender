@@ -18,48 +18,11 @@
                 et <code>surname</code> est <i>Benoit</i> donnera ainsi un mail contenant le message suivant <code>Le
                     salarié MANCEL Benoit...</code>
             <ul>
+            {% for v in var %}
                 <li>
-                    Email du déclarant: <code>{email_declarator}</code>
+                    {{v.doc}}&nbsp;: <code>{{'{'+v.var+'}'}}</code>
                 </li>
-                <li>
-                    Nom: <code>{name}</code>
-                </li>
-                <li>
-                    Prénom: <code>{surname}</code>
-                </li>
-                <li>
-                    Email: <code>{email}</code>
-                </li>
-                <li>
-                    Date d'arrivée: <code>{arrival_date}</code>
-                </li>
-                <li>
-                    Date de départ: <code>{departure_date}</code>
-                </li>
-                <li>
-                    Délégation territoriale: <code>{territory_unit_id}</code>
-                </li>
-                <li>
-                    Email responsable: <code>{email_referent}</code>
-                </li>
-                <li>
-                    Service/Pôle: <code>{service}</code>
-                </li>
-                <li>
-                    Adresse du lieu de travail: <code>{workplace_address}</code>
-                </li>
-                <li>
-                    Ville du lieu de travail: <code>{workplace_city}</code>
-                </li>
-                <li>
-                    Numéro de téléphone: <code>{phone_number}</code>
-                </li>
-                <li>
-                    Type de poste: <code>{position_type}</code>
-                </li>
-                <li>
-                    Commentaire: <code>{comment}</code>
-                </li>
+            {% endfor %}
             </ul>
         </div>
     </div>

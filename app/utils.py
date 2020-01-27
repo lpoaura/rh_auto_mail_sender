@@ -23,6 +23,9 @@ class SaveMixin(object):
         db.session.add(self)
         db.session.commit()
 
+    def update_to_db(self):
+        db.session.commmit()
+
 
 class GunicornApp(BaseApplication):
     """Convert a Flask application to a Gunicorn one.

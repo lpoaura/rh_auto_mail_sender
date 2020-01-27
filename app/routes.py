@@ -108,6 +108,14 @@ def persons():
 def recipient_add():
     recipient_form = RecipientForm()
 
+    var_list = []
+    for a in Person.__table__.columns:
+        print('att', a.doc, a.name)
+        d = {}
+        d['doc'] = a.doc
+        d['var'] = a.name
+        var_list.append(d)
+
     if request.method == 'POST':
         data = request.form
         try:
@@ -124,11 +132,48 @@ def recipient_add():
         except Exception as e:
             print("<add_recipient error>", e)
             flash(e)
-            return render_template("recipient_form.html", form=recipient_form)
+            return render_template("recipient_form.html", form=recipient_form, var=var_list)
 
         return redirect(url_for('main.recipients_list'))
 
-    return render_template("recipient_form.html", form=recipient_form)
+    return render_template("recipient_form.html", form=recipient_form, var=var_list)
+
+
+@main_bp.route("/recipient/edit/<id>", methods=["GET", "POST"])
+def recipient_edit(id=None):
+    recipient = Recipient.query.get(id)
+
+    recipient_form = RecipientForm(obj=recipient)
+    recipient_form.populate_obj(recipient)
+
+    var_list = []
+    for a in Person.__table__.columns:
+        d = {}
+        d['doc'] = a.doc
+        d['var'] = a.name
+        var_list.append(d)
+
+    if request.method == 'POST':
+        data = request.form
+        try:
+            recipient_data = {}
+            if data:
+                for d in data:
+                    print(d, data[d])
+                    if hasattr(Recipient, d):
+                        recipient_data[d] = data[d]
+
+            recipient.update(recipient_data)
+            recipient.update_to_db()
+
+        except Exception as e:
+            print("<add_recipient error>", e)
+            flash(e)
+            return render_template("recipient_form.html", form=recipient_form, var=var_list)
+
+        return redirect(url_for('main.recipients_list'))
+
+    return render_template("recipient_form.html", form=recipient_form, var=var_list)
 
 
 @main_bp.route('/recipients')

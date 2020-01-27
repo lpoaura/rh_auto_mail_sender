@@ -41,12 +41,12 @@ class PersonForm(FlaskForm):
                                       query_factory=get_territory_unit, get_label='name',
                                       get_pk=lambda a: a.name,
                                       render_kw=common_input)
-    email_referent = EmailField('Email responsable', validators=[DataRequired(), Email()], render_kw=common_input)
+    email_referent = EmailField('Email du responsable', validators=[DataRequired(), Email()], render_kw=common_input)
     service = StringField('Service/Pôle', render_kw=common_input)
     workplace_address = TextAreaField('Adresse du lieu de travail', validators=[DataRequired()],
                                       render_kw=common_input)
     workplace_city = StringField('Ville du lieu de travail', validators=[DataRequired()], render_kw=common_input)
-    phone_number = StringField('Numéro de téléphone', render_kw=common_input)
+    phone_number = StringField('Numéro de téléphone', validators=[DataRequired()], render_kw=common_input)
     contract_type = QuerySelectField('Type de contrat', validators=[DataRequired()], query_factory=get_contract_type,
                                      get_label='name',
                                      get_pk=lambda a: a.name,
@@ -55,7 +55,7 @@ class PersonForm(FlaskForm):
                                      get_label='name',
                                      get_pk=lambda a: a.name,
                                      render_kw=common_input)
-    teams_list = QuerySelectMultipleField('Listes Teams©', query_factory=get_teams_list,
+    teams_list = QuerySelectMultipleField('Selectionnez les listes de diffusion mail auxquelles la personne doit être rattachée', query_factory=get_teams_list,
                                           get_label='name',
                                           get_pk=lambda a: a.name,
                                           render_kw=common_input)
