@@ -19,3 +19,7 @@ main > .container {
 code {
   font-size: 80%;
 }
+
+label {
+  margin-bottom: unset;
+}

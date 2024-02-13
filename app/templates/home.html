@@ -24,9 +24,10 @@
         <h1>Plateforme de déclaration des nouveaux arrivants au sein des salariés de la LPO AuRA</h1>
         <div class="row">
             <div class="col text-center">
-                <a class="btn btn-success btn-lg" href="{{ url_for('main.person_add') }}"><i
-                        class="fa fa-user-plus"></i> Déclarer une nouvelle
-                    arrivée</a>
+                {%for type in dest_type %}
+                <a class="btn btn-success btn-lg" href="{{ url_for('main.person_add', dest_type=type.dest_type) }}"><i
+                        class="fa fa-user-plus"></i> {{type.dest_type}}</a>
+                {%endfor%}
             </div>
         </div>
     </div>

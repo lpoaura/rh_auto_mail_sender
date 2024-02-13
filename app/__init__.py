@@ -24,7 +24,7 @@ def create_app():
 
     app.register_blueprint(main_bp, url_prefix="/")
 
-    admin = Admin(app, name=app.config["APP_NAME"], template_mode='bootstrap3')
+    admin = Admin(app, name=app.config["APP_NAME"], template_mode='bootstrap4')
 
     from app.models import TerritoryUnit, PositionType, Person, Recipient, RecipientAdmin, PersonAdmin, ContractType, \
         TeamsList

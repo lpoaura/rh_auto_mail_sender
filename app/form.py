@@ -59,7 +59,7 @@ class PersonForm(FlaskForm):
                                           get_label='name',
                                           get_pk=lambda a: a.name,
                                           render_kw=common_input)
-    comment = TextAreaField('Commentaire', render_kw=common_input)
+    comment = TextAreaField('Commentaire', render_kw=common_input, description="<b>Si vous avez besoin d'une ligne mobile</b>, merci de le préciser")
 
 
 class RecipientForm(FlaskForm):

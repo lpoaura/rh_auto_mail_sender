@@ -1,11 +1,14 @@
+import logging
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 
 import config
 from app.form import PersonForm, RecipientForm
 from app.models import Person, Recipient
-from app.utils import sendmail, version
+from app.utils import sendmail, version, db
+
+logger = logging.getLogger()
 
 main_bp = Blueprint('main', __name__, template_folder='templates')
 
@@ -20,13 +23,16 @@ def global_variables():
 
 @main_bp.route("/", methods=["GET", "POST"])
 def home():
-    return render_template("home.html")
+    dest_type = db.session.query(Recipient.dest_type).distinct().all()
+    return render_template("home.html", dest_type=dest_type)
 
 
 @main_bp.route("/person/add", methods=["GET", "POST"])
 def person_add():
     person_form = PersonForm()
-    recipient_list = Recipient.query.all()
+    dest_type=request.args.get('dest_type')
+    dest_type = dest_type if dest_type else 'Arrivée'
+    recipient_list = Recipient.query.filter_by(dest_type=dest_type).all()
     print('<person_add Method>', request.method)
     if request.method == 'POST':
         data = request.form

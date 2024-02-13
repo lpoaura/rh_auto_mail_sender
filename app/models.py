@@ -1,4 +1,5 @@
 from datetime import datetime
+import config
 
 from flask_admin.contrib.sqla import ModelView
 
@@ -27,6 +28,7 @@ class TeamsList(db.Model, SaveMixin):
 
 class Recipient(db.Model, SaveMixin):
     id_email_received_model = db.Column(db.Integer, primary_key=True)
+    dest_type = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(256), nullable=False)
     subject = db.Column(db.String(256), nullable=False)
     body = db.Column(db.Text, nullable=False)
@@ -40,7 +42,10 @@ class RecipientAdmin(ModelView):
     form_widget_args = {
         'body': {
             'rows': 20
-        }
+        },   
+    }
+    form_choices = {
+        'dest_type': [(t,t) for t in config.TYPE_DEST]
     }
 
 
