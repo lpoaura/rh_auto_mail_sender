@@ -17,6 +17,7 @@ def version():
         version = VERSION.read().replace("\n", "n")
         return version
 
+
 class SaveMixin(object):
 
     def save_to_db(self):
@@ -28,8 +29,7 @@ class SaveMixin(object):
 
 
 class GunicornApp(BaseApplication):
-    """Convert a Flask application to a Gunicorn one.
-    """
+    """Convert a Flask application to a Gunicorn one."""
 
     def __init__(self, flask_app, settings=None):
         """Initialize GunicornApp.
@@ -63,22 +63,23 @@ class GunicornApp(BaseApplication):
 def sendmail(subject, body, recipient, datas):
     try:
         pre_title = subject.format(**datas)
-        title = "[{app_name}] {subject}".format(app_name=config.APP_NAME, subject=pre_title)
+        title = "[{app_name}] {subject}".format(
+            app_name=config.APP_NAME, subject=pre_title
+        )
         body = body.format(**datas)
-        print('content', body)
+        print("content", body)
 
         msg = MIMEMultipart()
-        msg['reply-to'] = datas['email_declarator']
-        msg['From'] = config.SMTP_LOGIN
-        msg['To'] = recipient
-        msg['Subject'] = title
+        msg["reply-to"] = datas["email_declarator"]
+        msg["From"] = config.SMTP_LOGIN
+        msg["To"] = recipient
+        msg["Subject"] = title
         message = MIMEText(body)
         msg.attach(message)
 
-
         # message = 'Subject: {subject}\n\n{body}'.format(subject=title, body=body)
 
-        print('<MESSAGE>', msg)
+        print("<MESSAGE>", msg)
 
         mailserver = smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT)
         mailserver.ehlo()
@@ -87,4 +88,4 @@ def sendmail(subject, body, recipient, datas):
         mailserver.send_message(msg)
         mailserver.quit()
     except Exception as e:
-        print('<sendmail() error> {}'.format(e))
+        print("<sendmail() error> {}".format(e))
